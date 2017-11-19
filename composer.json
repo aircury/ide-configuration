@@ -1,0 +1,35 @@
+{
+    "name": "aircury/ide-configuration",
+    "description": "Set your IDE configuration on a YAML file and share it with your source code. Including servers, deployment, interpreters...",
+    "keywords": ["ide", "configuration", "phpstorm"],
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jose Diaz",
+            "email": "jose@aircury.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Aircury\\IDEConfiguration\\": "."
+        }
+    },
+    "minimum-stability": "dev",
+    "require": {
+        "aircury/xml": "^1.0@dev",
+        "symfony/console": "^3.3",
+        "symfony/framework-bundle": "^3.3",
+        "symfony/yaml": "^3.3",
+        "webpatser/laravel-uuid": "^3.0"
+    },
+    "config": {
+        "sort-packages": true,
+        "bin-dir": "bin"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    }
+}

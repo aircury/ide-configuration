@@ -1,0 +1,7 @@
+# IDE
+/.idea/*
+
+# Dependencies
+/vendor/
+
+IDEConfiguration.iml

@@ -1,0 +1,15 @@
+#!/usr/bin/env php
+
+<?php
+
+require_once __DIR__ . '/../vendor/autoload.php';
+
+use Aircury\IDEConfiguration\ConfigureIDECommand;
+use Symfony\Component\Console\Input\ArgvInput;
+use Symfony\Component\Console\Output\ConsoleOutput;
+
+$configureIDE = new ConfigureIDECommand();
+$input        = new ArgvInput();
+$output       = new ConsoleOutput();
+
+$configureIDE->run($input, $output);
