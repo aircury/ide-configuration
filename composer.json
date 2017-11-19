@@ -17,9 +17,11 @@
     },
     "minimum-stability": "dev",
     "require": {
+        "aircury/collection": "^1.0@dev",
         "aircury/xml": "^1.0@dev",
         "symfony/console": "^3.3",
         "symfony/framework-bundle": "^3.3",
+        "symfony/options-resolver": "^3.3",
         "symfony/yaml": "^3.3",
         "webpatser/laravel-uuid": "^3.0"
     },

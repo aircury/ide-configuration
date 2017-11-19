@@ -1,0 +1,13 @@
+modules:
+    ide-config:
+        root: $PROJECT_DIR$
+        excluded:
+            - .idea
+        sources:
+            - .
+        tests:
+            - Tests
+        libraries:
+            - vendor
+composer:
+    synchronize: true
