@@ -2,7 +2,21 @@
 
 <?php
 
-require_once __DIR__ . '/../vendor/autoload.php';
+$lastDir = __DIR__;
+$tried   = [];
+
+while (!file_exists($autoload = $lastDir . '/vendor/autoload.php')) {
+    if (dirname($lastDir) === $lastDir) {
+        throw new \RuntimeException(
+            'Could not find a /vendor/autoload.php. Tried searching in: ' . "\n" . implode("\n", $tried) . "\n"
+        );
+    }
+
+    $tried[] = $lastDir;
+    $lastDir = dirname($lastDir);
+}
+
+require_once $autoload;
 
 use Aircury\IDEConfiguration\ConfigureIDECommand;
 use Symfony\Component\Console\Input\ArgvInput;
