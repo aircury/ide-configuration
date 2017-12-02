@@ -62,6 +62,7 @@ class Module
         $this->sources   = $options['sources'];
         $this->tests     = $options['tests'];
         $this->libraries = $options['libraries'];
+        $this->resources = $options['resources'];
     }
 
     private function configureOptions(OptionsResolver $resolver): void
