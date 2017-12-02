@@ -8,6 +8,7 @@ use Aircury\IDEConfiguration\Manipulator\DataSourcesManipulator;
 use Aircury\IDEConfiguration\Manipulator\DeploymentManipulator;
 use Aircury\IDEConfiguration\Manipulator\EncodingsManipulator;
 use Aircury\IDEConfiguration\Manipulator\IMLManipulator;
+use Aircury\IDEConfiguration\Manipulator\MiscManipulator;
 use Aircury\IDEConfiguration\Manipulator\ModulesManipulator;
 use Aircury\IDEConfiguration\Manipulator\PHPManipulator;
 use Aircury\IDEConfiguration\Manipulator\PHPTestFrameworkManipulator;
@@ -72,6 +73,7 @@ class ConfigureIDECommand extends Command
         $workspaceManipulator        = new WorkspaceManipulator();
         $phpManipulator              = new PHPManipulator();
         $phpTestFrameworkManipulator = new PHPTestFrameworkManipulator();
+        $miscManipulator             = new MiscManipulator();
         $webServersManipulator       = new WebServersManipulator();
         $deploymentManipulator       = new DeploymentManipulator();
         $vcsManipulator              = new VCSManipulator();
@@ -152,6 +154,10 @@ class ConfigureIDECommand extends Command
 
                         $workspaceManipulator->addDefaultInterpreter($workspace, $interpreters->first());
                     }
+                }
+
+                if (null !== ($javascript = $ideConfiguration->getJavaScript())) {
+                    $miscManipulator->addJavaScript($project->getMisc(), $javascript);
                 }
             }
 

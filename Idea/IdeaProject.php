@@ -17,6 +17,7 @@ class IdeaProject
         'webServers'       => '/webServers.xml',
         'php'              => '/php.xml',
         'phpTestFramework' => '/php-test-framework.xml',
+        'misc'             => '/misc.xml',
         'vcs'              => '/vcs.xml',
         'dataSources'      => '/dataSources.xml',
         'dataSourcesLocal' => '/dataSources.local.xml',
@@ -115,6 +116,11 @@ class IdeaProject
     public function getPHPTestFramework(): Node
     {
         return $this->getGeneric('phpTestFramework');
+    }
+
+    public function getMisc(): Node
+    {
+        return $this->getGeneric('misc');
     }
 
     public function getVCS(): Node

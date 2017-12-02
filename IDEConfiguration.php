@@ -7,6 +7,7 @@ use Aircury\IDEConfiguration\Model\Database;
 use Aircury\IDEConfiguration\Model\DatabaseCollection;
 use Aircury\IDEConfiguration\Model\Deployment;
 use Aircury\IDEConfiguration\Model\DeploymentCollection;
+use Aircury\IDEConfiguration\Model\JavaScript;
 use Aircury\IDEConfiguration\Model\Module;
 use Aircury\IDEConfiguration\Model\ModuleCollection;
 use Aircury\IDEConfiguration\Model\PHP;
@@ -51,6 +52,11 @@ class IDEConfiguration
      * @var PHP|null
      */
     private $php;
+
+    /**
+     * @var JavaScript|null
+     */
+    private $javascript;
 
     /**
      * @var VCS|null
@@ -116,6 +122,10 @@ class IDEConfiguration
             $this->php = new PHP($ideConfig['php']);
         }
 
+        if (!empty($ideConfig['javascript'])) {
+            $this->javascript = new JavaScript($ideConfig['javascript']);
+        }
+
         if (!empty($ideConfig['vcs'])) {
             $this->vcs = new VCS($ideConfig['vcs']);
         }
@@ -179,6 +189,7 @@ class IDEConfiguration
                 'servers'    => [],
                 'deployment' => [],
                 'php'        => [],
+                'javascript' => [],
                 'vcs'        => [],
                 'databases'  => [],
                 'sql'        => [],
@@ -192,6 +203,7 @@ class IDEConfiguration
         $resolver->setAllowedTypes('servers', 'array');
         $resolver->setAllowedTypes('deployment', 'array');
         $resolver->setAllowedTypes('php', 'array');
+        $resolver->setAllowedTypes('javascript', 'array');
         $resolver->setAllowedTypes('vcs', 'array');
         $resolver->setAllowedTypes('databases', 'array');
         $resolver->setAllowedTypes('sql', 'array');
@@ -222,6 +234,11 @@ class IDEConfiguration
     public function getPHP(): ?PHP
     {
         return $this->php;
+    }
+
+    public function getJavaScript(): ?JavaScript
+    {
+        return $this->javascript;
     }
 
     public function getDeployments(): DeploymentCollection
