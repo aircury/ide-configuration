@@ -78,8 +78,8 @@ class Interpreter
         $this->phpPath    = $options['php_path'];
         $this->privateKey = $options['private_key'];
 
-        if (!empty($options['php_unit'])) {
-            $this->phpUnit = new PHPUnit($options['php_unit']);
+        if (!empty($options['phpunit'])) {
+            $this->phpUnit = new PHPUnit($options['phpunit']);
         }
 
         if (!empty($options['behat'])) {
