@@ -43,6 +43,11 @@ class Database
     private $username;
 
     /**
+     * @var string
+     */
+    private $path;
+
+    /**
      * @var string[]
      */
     private $schemas;
@@ -67,6 +72,7 @@ class Database
         $this->port     = strval($options['port']);
         $this->database = $options['database'];
         $this->username = $options['username'];
+        $this->path     = $options['path'];
         $this->schemas  = $options['schemas'];
     }
 
@@ -75,17 +81,40 @@ class Database
         $resolver->setRequired('driver');
         $resolver->setAllowedTypes('driver', 'string');
 
-        $resolver->setRequired('host');
-        $resolver->setAllowedTypes('host', 'string');
+        $resolver->setDefault('host', null);
+        $resolver->setAllowedTypes('host', ['null', 'string']);
 
-        $resolver->setRequired('port');
-        $resolver->setAllowedTypes('port', ['int', 'string']);
+        $resolver->setDefault('port', null);
+        $resolver->setAllowedTypes('port', ['null', 'int', 'string']);
 
-        $resolver->setRequired('database');
-        $resolver->setAllowedTypes('database', 'string');
+        $resolver->setDefault('database', null);
+        $resolver->setAllowedTypes('database', ['null', 'string']);
 
-        $resolver->setRequired('username');
-        $resolver->setAllowedTypes('username', 'string');
+        $resolver->setDefault('username', null);
+        $resolver->setAllowedTypes('username', ['null', 'string']);
+
+        $resolver->setDefault('path', null);
+        $resolver->setAllowedTypes('path', ['null', 'string']);
+        $resolver->setNormalizer(
+            'path',
+            function (Options $options, $path) {
+                if (
+                    null === $path &&
+                    (
+                        null === $options['host'] ||
+                        null === $options['port'] ||
+                        null === $options['database'] ||
+                        null === $options['username']
+                    )
+                ) {
+                    throw new \InvalidArgumentException(
+                        'When path is null, then host, port, database and username must be provided'
+                    );
+                }
+
+                return $path;
+            }
+        );
 
         $resolver->setDefault('schemas', []);
         $resolver->setAllowedTypes('schemas', 'array');
@@ -120,24 +149,29 @@ class Database
         return $this->driver;
     }
 
-    public function getHost(): string
+    public function getHost(): ?string
     {
         return $this->host;
     }
 
-    public function getPort(): string
+    public function getPort(): ?string
     {
         return $this->port;
     }
 
-    public function getDatabase(): string
+    public function getDatabase(): ?string
     {
         return $this->database;
     }
 
-    public function getUsername(): string
+    public function getUsername(): ?string
     {
         return $this->username;
+    }
+
+    public function getPath(): ?string
+    {
+        return $this->path;
     }
 
     /**

@@ -28,7 +28,10 @@ class DataSourcesLocalManipulator
             }
 
             $localDataSource->getNamedChild('secret-storage')->contents = 'master_key';
-            $localDataSource->getNamedChild('user-name')->contents      = $database->getUsername();
+
+            if (null !== ($username = $database->getUsername())) {
+                $localDataSource->getNamedChild('user-name')->contents = $username;
+            }
         }
     }
 }

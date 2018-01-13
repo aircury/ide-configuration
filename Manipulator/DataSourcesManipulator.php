@@ -8,6 +8,12 @@ use Webpatser\Uuid\Uuid;
 
 class DataSourcesManipulator
 {
+    private const DRIVER_REF_NAMES = [
+        'mysql'      => 'mysql',
+        'postgresql' => 'postgresql',
+        'sqlite'     => 'sqlite.xerial',
+    ];
+
     public function addDatabases(Node $dataSources, DatabaseCollection $databases): void
     {
         $dataSourceManager = $dataSources->getNamedChild('component', ['name' => 'DataSourceManagerImpl']);
@@ -30,19 +36,31 @@ class DataSourcesManipulator
                 case 'postgresql':
                     $dataSource->getNamedChild('jdbc-driver')->contents = 'org.postgresql.Driver';
                     break;
+                case 'sqlite':
+                    $dataSource->getNamedChild('jdbc-driver')->contents = 'org.sqlite.JDBC';
+                    break;
                 default:
                     throw new \RuntimeException('Not implemented: ' . $database->getDriver());
             }
 
             $dataSource->getNamedChild('synchronize')->contents = 'true';
-            $dataSource->getNamedChild('driver-ref')->contents  = $database->getDriver();
-            $dataSource->getNamedChild('jdbc-url')->contents    = sprintf(
-                'jdbc:%s://%s:%s/%s',
-                $database->getDriver(),
-                $database->getHost(),
-                $database->getPort(),
-                $database->getDatabase()
-            );
+            $dataSource->getNamedChild('driver-ref')->contents  = self::DRIVER_REF_NAMES[$database->getDriver()];
+
+            if (null === $database->getPath()) {
+                $dataSource->getNamedChild('jdbc-url')->contents = sprintf(
+                    'jdbc:%s://%s:%s/%s',
+                    $database->getDriver(),
+                    $database->getHost(),
+                    $database->getPort(),
+                    $database->getDatabase()
+                );
+            } else {
+                $dataSource->getNamedChild('jdbc-url')->contents = sprintf(
+                    'jdbc:%s:%s',
+                    $database->getDriver(),
+                    $database->getPath()
+                );
+            }
         }
     }
 }
