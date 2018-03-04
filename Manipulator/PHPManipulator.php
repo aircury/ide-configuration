@@ -6,7 +6,10 @@ use Aircury\IDEConfiguration\IDEConfiguration;
 use Aircury\IDEConfiguration\Model\Behat;
 use Aircury\IDEConfiguration\Model\Interpreter;
 use Aircury\IDEConfiguration\Model\PHPUnit;
+use Aircury\IDEConfiguration\Util\ComposerLockHelper;
 use Aircury\Xml\Node;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Process\Process;
 use Webpatser\Uuid\Uuid;
 
 class PHPManipulator
@@ -112,8 +115,41 @@ class PHPManipulator
 
         $phpunit['load_method']             = 'CUSTOM_LOADER';
         $phpunit['configuration_file_path'] = $projectRootDir . '/' . $phpunitConfiguration->getConfiguration();
-        $phpunit['custom_loader_path']      = $projectRootDir . '/' . $phpunitConfiguration->getLoader();
-        $phpunit['phpunit_phar_path']       = '';
-        $phpunit['use_configuration_file']  = 'true';
+
+        if ('auto' === ($loader = $phpunitConfiguration->getLoader())) {
+            $composerLockHelper = new ComposerLockHelper($projectRootDir);
+
+            if ($composerLockHelper->hasPackage('phpunit/phpunit')) {
+                $loader = 'vendor/autoload.php';
+            } elseif ($composerLockHelper->hasPackage('symfony/phpunit-bridge')) {
+                $phpUnit = new Process($projectRootDir . '/vendor/symfony/phpunit-bridge/bin/simple-phpunit --version');
+
+                $phpUnit->run();
+
+                $phpUnitVersion = implode('.', array_slice(explode('.', explode(' ', $phpUnit->getOutput())[1]), 0, 2));
+                $loaderDir      = 'vendor/bin/.phpunit/phpunit-' . $phpUnitVersion;
+                $loader         = $loaderDir . '/vendor/autoload.php';
+
+                // PHPStorm needs this file to exist to launch, so just symlink it
+
+                if (!file_exists($projectRootDir . '/' . $loaderDir . '/vendor/phpunit/phpunit/phpunit')) {
+                    $filesystem = new Filesystem();
+
+                    $filesystem->mkdir($projectRootDir . '/' . $loaderDir . '/vendor/phpunit/phpunit');
+                    $filesystem->symlink(
+                        $projectRootDir . '/' . $loaderDir . '/phpunit',
+                        $projectRootDir . '/' . $loaderDir . '/vendor/phpunit/phpunit/phpunit'
+                    );
+                }
+            } else {
+                throw new \RuntimeException(
+                    'Set to figure out the phpunit loader automatically but was unable to do so'
+                );
+            }
+        }
+
+        $phpunit['custom_loader_path']     = $projectRootDir . '/' . $loader;
+        $phpunit['phpunit_phar_path']      = '';
+        $phpunit['use_configuration_file'] = 'true';
     }
 }

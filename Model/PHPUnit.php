@@ -39,7 +39,7 @@ class PHPUnit
         $resolver->setRequired('configuration');
         $resolver->setAllowedTypes('configuration', 'string');
 
-        $resolver->setRequired('loader');
+        $resolver->setDefault('loader', 'auto');
         $resolver->setAllowedTypes('loader', 'string');
     }
 
