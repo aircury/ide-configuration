@@ -4,36 +4,21 @@ namespace Aircury\IDEConfiguration\Model;
 
 use Aircury\Collection\AbstractCollection;
 
+/**
+ * @method void                 offsetSet($offset, Deployment $element)
+ * @method Deployment           offsetGet($offset)
+ * @method Deployment[]         toArray()
+ * @method Deployment[]         toValuesArray()
+ * @method Deployment|null      first()
+ * @method Deployment|null      last()
+ * @method bool                 removeElement(Deployment $element)
+ * @method DeploymentCollection filter(callable $filter, bool $returnNewCollection = true)
+ * @method Deployment|null      pop()
+ */
 class DeploymentCollection extends AbstractCollection
 {
     public function getClass(): string
     {
         return Deployment::class;
-    }
-
-    public function offsetGet($offset): Deployment
-    {
-        return $this->doOffsetGet($offset);
-    }
-
-    /**
-     * @return Deployment[]
-     */
-    public function toArray(): array
-    {
-        return $this->getElements();
-    }
-
-    /**
-     * @return Deployment[]
-     */
-    public function toValuesArray(): array
-    {
-        return parent::toValuesArray();
-    }
-
-    public function first(): Deployment
-    {
-        return $this->doGetFirst();
     }
 }

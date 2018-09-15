@@ -4,36 +4,21 @@ namespace Aircury\IDEConfiguration\Model;
 
 use Aircury\Collection\AbstractCollection;
 
+/**
+ * @method void                  offsetSet($offset, Interpreter $element)
+ * @method Interpreter           offsetGet($offset)
+ * @method Interpreter[]         toArray()
+ * @method Interpreter[]         toValuesArray()
+ * @method Interpreter|null      first()
+ * @method Interpreter|null      last()
+ * @method bool                  removeElement(Interpreter $element)
+ * @method InterpreterCollection filter(callable $filter, bool $returnNewCollection = true)
+ * @method Interpreter|null      pop()
+ */
 class InterpreterCollection extends AbstractCollection
 {
     public function getClass(): string
     {
         return Interpreter::class;
-    }
-
-    public function offsetGet($offset): Interpreter
-    {
-        return $this->doOffsetGet($offset);
-    }
-
-    /**
-     * @return Interpreter[]
-     */
-    public function toArray(): array
-    {
-        return $this->getElements();
-    }
-
-    /**
-     * @return Interpreter[]
-     */
-    public function toValuesArray(): array
-    {
-        return parent::toValuesArray();
-    }
-
-    public function first(): Interpreter
-    {
-        return $this->doGetFirst();
     }
 }

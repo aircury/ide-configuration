@@ -4,36 +4,21 @@ namespace Aircury\IDEConfiguration\Model;
 
 use Aircury\Collection\AbstractCollection;
 
+/**
+ * @method void          offsetSet($offset, Run $element)
+ * @method Run           offsetGet($offset)
+ * @method Run[]         toArray()
+ * @method Run[]         toValuesArray()
+ * @method Run|null      first()
+ * @method Run|null      last()
+ * @method bool          removeElement(Run $element)
+ * @method RunCollection filter(callable $filter, bool $returnNewCollection = true)
+ * @method Run|null      pop()
+ */
 class RunCollection extends AbstractCollection
 {
     public function getClass(): string
     {
         return Run::class;
-    }
-
-    public function offsetGet($offset): Run
-    {
-        return $this->doOffsetGet($offset);
-    }
-
-    /**
-     * @return Run[]
-     */
-    public function toArray(): array
-    {
-        return $this->getElements();
-    }
-
-    /**
-     * @return Run[]
-     */
-    public function toValuesArray(): array
-    {
-        return parent::toValuesArray();
-    }
-
-    public function first(): Run
-    {
-        return $this->doGetFirst();
     }
 }

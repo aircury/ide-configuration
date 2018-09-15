@@ -4,36 +4,21 @@ namespace Aircury\IDEConfiguration\Model;
 
 use Aircury\Collection\AbstractCollection;
 
+/**
+ * @method void             offsetSet($offset, Server $element)
+ * @method Server           offsetGet($offset)
+ * @method Server[]         toArray()
+ * @method Server[]         toValuesArray()
+ * @method Server|null      first()
+ * @method Server|null      last()
+ * @method bool             removeElement(Server $element)
+ * @method ServerCollection filter(callable $filter, bool $returnNewCollection = true)
+ * @method Server|null      pop()
+ */
 class ServerCollection extends AbstractCollection
 {
     public function getClass(): string
     {
         return Server::class;
-    }
-
-    public function offsetGet($offset): Server
-    {
-        return $this->doOffsetGet($offset);
-    }
-
-    /**
-     * @return Server[]
-     */
-    public function toArray(): array
-    {
-        return $this->getElements();
-    }
-
-    /**
-     * @return Server[]
-     */
-    public function toValuesArray(): array
-    {
-        return parent::toValuesArray();
-    }
-
-    public function first(): Server
-    {
-        return $this->doGetFirst();
     }
 }
