@@ -28,8 +28,12 @@
         "symfony/process": "^3.3"
     },
     "config": {
+        "preferred-install": {
+            "*": "source"
+        },
         "sort-packages": true,
-        "bin-dir": "bin"
+        "bin-dir": "bin",
+        "discard-changes": true
     },
     "extra": {
         "branch-alias": {
