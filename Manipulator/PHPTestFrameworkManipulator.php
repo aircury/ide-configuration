@@ -45,7 +45,9 @@ class PHPTestFrameworkManipulator
 
             $phpUnit->run();
 
-            $phpUnitVersion = explode(' ', $phpUnit->getOutput())[1];
+            if (null === ($phpUnitVersion = explode(' ', $phpUnit->getOutput())[1] ?? null)) {
+                return;
+            }
         }
 
         $toolsCache
