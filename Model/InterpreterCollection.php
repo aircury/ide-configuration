@@ -14,6 +14,7 @@ use Aircury\Collection\AbstractCollection;
  * @method bool                  removeElement(Interpreter $element)
  * @method InterpreterCollection filter(callable $filter, bool $returnNewCollection = true)
  * @method Interpreter|null      pop()
+ * @method Interpreter|null      shift()
  */
 class InterpreterCollection extends AbstractCollection
 {

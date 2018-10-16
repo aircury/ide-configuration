@@ -14,6 +14,7 @@ use Aircury\Collection\AbstractCollection;
  * @method bool               removeElement(Database $element)
  * @method DatabaseCollection filter(callable $filter, bool $returnNewCollection = true)
  * @method Database|null      pop()
+ * @method Database|null      shift()
  */
 class DatabaseCollection extends AbstractCollection
 {
