@@ -38,7 +38,7 @@ class ConfigureIDECommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $finder    = new Finder();
+        $finder = new Finder();
         $searchDir = getcwd();
 
         if (null !== ($path = $input->getArgument('path'))) {
@@ -68,22 +68,22 @@ class ConfigureIDECommand extends Command
                 ]
             );
 
-        $modulesManipulator          = new ModulesManipulator();
-        $imlManipulator              = new IMLManipulator();
-        $webResourcesManipulator     = new WebResourcesManipulator();
-        $workspaceManipulator        = new WorkspaceManipulator();
-        $phpManipulator              = new PHPManipulator();
+        $modulesManipulator = new ModulesManipulator();
+        $imlManipulator = new IMLManipulator();
+        $webResourcesManipulator = new WebResourcesManipulator();
+        $workspaceManipulator = new WorkspaceManipulator();
+        $phpManipulator = new PHPManipulator();
         $phpTestFrameworkManipulator = new PHPTestFrameworkManipulator();
-        $miscManipulator             = new MiscManipulator();
-        $webServersManipulator       = new WebServersManipulator();
-        $deploymentManipulator       = new DeploymentManipulator();
-        $vcsManipulator              = new VCSManipulator();
-        $dataSourcesManipulator      = new DataSourcesManipulator();
+        $miscManipulator = new MiscManipulator();
+        $webServersManipulator = new WebServersManipulator();
+        $deploymentManipulator = new DeploymentManipulator();
+        $vcsManipulator = new VCSManipulator();
+        $dataSourcesManipulator = new DataSourcesManipulator();
         $dataSourcesLocalManipulator = new DataSourcesLocalManipulator();
-        $sqlDialectsManipulator      = new SQLDialectsManipulator();
-        $symfonyManipulator          = new SymfonyManipulator();
-        $laravelManipulator          = new LaravelManipulator();
-        $encodingsManipulator        = new EncodingsManipulator();
+        $sqlDialectsManipulator = new SQLDialectsManipulator();
+        $symfonyManipulator = new SymfonyManipulator();
+        $laravelManipulator = new LaravelManipulator();
+        $encodingsManipulator = new EncodingsManipulator();
 
         foreach ($finder as $file) {
             /** @var SplFileInfo $file */
@@ -96,10 +96,10 @@ class ConfigureIDECommand extends Command
             );
 
             $ideConfiguration = new IDEConfiguration($file->getRealPath());
-            $ideaPath         = dirname($file->getRealPath()) . '/.idea';
-            $projectRootDir   = dirname($file->getRealPath(), 1);
-            $projectsRootDir  = dirname($file->getRealPath(), 2);
-            $project          = new IdeaProject($ideaPath);
+            $ideaPath = dirname($file->getRealPath()) . '/.idea';
+            $projectRootDir = dirname($file->getRealPath(), 1);
+            $projectsRootDir = dirname($file->getRealPath(), 2);
+            $project = new IdeaProject($ideaPath);
 
             $modulesManipulator->addModules($project->getModules(), $ideConfiguration);
 
@@ -130,7 +130,7 @@ class ConfigureIDECommand extends Command
                     $workspaceManipulator->addPHP($workspace, $ideConfiguration);
                     $phpManipulator->addPHP($php = $project->getPHP(), $ideConfiguration, $projectsRootDir);
 
-                    $interpreters     = $ideConfiguration->getPHP()->getInterpreters();
+                    $interpreters = $ideConfiguration->getPHP()->getInterpreters();
                     $phpTestFramework = $project->getPHPTestFramework();
 
                     if (!$interpreters->isEmpty()) {

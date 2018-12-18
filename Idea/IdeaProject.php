@@ -10,21 +10,21 @@ use Symfony\Component\Filesystem\Filesystem;
 class IdeaProject
 {
     private static $paths = [
-        'modules'          => '/modules.xml',
-        'workspace'        => '/workspace.xml',
-        'encodings'        => '/encodings.xml',
-        'deployment'       => '/deployment.xml',
-        'webServers'       => '/webServers.xml',
-        'php'              => '/php.xml',
+        'modules' => '/modules.xml',
+        'workspace' => '/workspace.xml',
+        'encodings' => '/encodings.xml',
+        'deployment' => '/deployment.xml',
+        'webServers' => '/webServers.xml',
+        'php' => '/php.xml',
         'phpTestFramework' => '/php-test-framework.xml',
-        'misc'             => '/misc.xml',
-        'vcs'              => '/vcs.xml',
-        'dataSources'      => '/dataSources.xml',
+        'misc' => '/misc.xml',
+        'vcs' => '/vcs.xml',
+        'dataSources' => '/dataSources.xml',
         'dataSourcesLocal' => '/dataSources.local.xml',
-        'sqlDialects'      => '/sqldialects.xml',
-        'symfony'          => '/symfony2.xml',
-        'laravel'          => '/laravel-plugin.xml',
-        'webResources'     => '/webResources.xml',
+        'sqlDialects' => '/sqldialects.xml',
+        'symfony' => '/symfony2.xml',
+        'laravel' => '/laravel-plugin.xml',
+        'webResources' => '/webResources.xml',
     ];
 
     /**

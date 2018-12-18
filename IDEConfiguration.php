@@ -102,11 +102,11 @@ class IDEConfiguration
 
         $ideConfig = self::$topLevelResolver->resolve($ideConfig);
 
-        $this->modules     = new ModuleCollection();
-        $this->servers     = new ServerCollection();
+        $this->modules = new ModuleCollection();
+        $this->servers = new ServerCollection();
         $this->deployments = new DeploymentCollection();
-        $this->databases   = new DatabaseCollection();
-        $this->runs        = new RunCollection();
+        $this->databases = new DatabaseCollection();
+        $this->runs = new RunCollection();
 
         foreach ($ideConfig['modules'] as $moduleName => $moduleConfig) {
             $this->modules[$moduleName] = new Module($moduleName, $moduleConfig);
@@ -195,17 +195,17 @@ class IDEConfiguration
 
         $resolver->setDefaults(
             [
-                'composer'   => [],
-                'servers'    => [],
+                'composer' => [],
+                'servers' => [],
                 'deployment' => [],
-                'php'        => [],
+                'php' => [],
                 'javascript' => [],
-                'vcs'        => [],
-                'databases'  => [],
-                'sql'        => [],
-                'symfony'    => null,
-                'laravel'    => null,
-                'run'        => [],
+                'vcs' => [],
+                'databases' => [],
+                'sql' => [],
+                'symfony' => null,
+                'laravel' => null,
+                'run' => [],
             ]
         );
 
