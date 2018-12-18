@@ -8,6 +8,7 @@ use Aircury\IDEConfiguration\Manipulator\DataSourcesManipulator;
 use Aircury\IDEConfiguration\Manipulator\DeploymentManipulator;
 use Aircury\IDEConfiguration\Manipulator\EncodingsManipulator;
 use Aircury\IDEConfiguration\Manipulator\IMLManipulator;
+use Aircury\IDEConfiguration\Manipulator\LaravelManipulator;
 use Aircury\IDEConfiguration\Manipulator\MiscManipulator;
 use Aircury\IDEConfiguration\Manipulator\ModulesManipulator;
 use Aircury\IDEConfiguration\Manipulator\PHPManipulator;
@@ -81,6 +82,7 @@ class ConfigureIDECommand extends Command
         $dataSourcesLocalManipulator = new DataSourcesLocalManipulator();
         $sqlDialectsManipulator      = new SQLDialectsManipulator();
         $symfonyManipulator          = new SymfonyManipulator();
+        $laravelManipulator          = new LaravelManipulator();
         $encodingsManipulator        = new EncodingsManipulator();
 
         foreach ($finder as $file) {
@@ -185,6 +187,10 @@ class ConfigureIDECommand extends Command
 
             if (null !== ($symfony = $ideConfiguration->getSymfony())) {
                 $symfonyManipulator->addSymfony($project->getSymfony(), $symfony);
+            }
+
+            if (null !== ($laravel = $ideConfiguration->getLaravel())) {
+                $laravelManipulator->addLaravel($project->getLaravel(), $laravel);
             }
 
             $runs = $ideConfiguration->getRuns();

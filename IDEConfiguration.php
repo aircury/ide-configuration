@@ -8,6 +8,7 @@ use Aircury\IDEConfiguration\Model\DatabaseCollection;
 use Aircury\IDEConfiguration\Model\Deployment;
 use Aircury\IDEConfiguration\Model\DeploymentCollection;
 use Aircury\IDEConfiguration\Model\JavaScript;
+use Aircury\IDEConfiguration\Model\Laravel;
 use Aircury\IDEConfiguration\Model\Module;
 use Aircury\IDEConfiguration\Model\ModuleCollection;
 use Aircury\IDEConfiguration\Model\PHP;
@@ -79,6 +80,11 @@ class IDEConfiguration
     private $symfony;
 
     /**
+     * @var Laravel|null
+     */
+    private $laravel;
+
+    /**
      * @var RunCollection
      */
     private $runs;
@@ -142,6 +148,10 @@ class IDEConfiguration
             $this->symfony = new Symfony($ideConfig['symfony']);
         }
 
+        if (null !== $ideConfig['laravel']) {
+            $this->laravel = new Laravel($ideConfig['laravel']);
+        }
+
         foreach ($ideConfig['run'] as $runName => $runConfig) {
             $this->runs[$runName] = new Run($runName, $runConfig);
         }
@@ -194,6 +204,7 @@ class IDEConfiguration
                 'databases'  => [],
                 'sql'        => [],
                 'symfony'    => null,
+                'laravel'    => null,
                 'run'        => [],
             ]
         );
@@ -208,6 +219,7 @@ class IDEConfiguration
         $resolver->setAllowedTypes('databases', 'array');
         $resolver->setAllowedTypes('sql', 'array');
         $resolver->setAllowedTypes('symfony', ['null', 'array']);
+        $resolver->setAllowedTypes('laravel', ['null', 'array']);
         $resolver->setAllowedTypes('run', 'array');
     }
 
@@ -264,6 +276,11 @@ class IDEConfiguration
     public function getSymfony(): ?Symfony
     {
         return $this->symfony;
+    }
+
+    public function getLaravel(): ?Laravel
+    {
+        return $this->laravel;
     }
 
     public function getRuns(): RunCollection

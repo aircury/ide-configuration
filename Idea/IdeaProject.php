@@ -23,6 +23,7 @@ class IdeaProject
         'dataSourcesLocal' => '/dataSources.local.xml',
         'sqlDialects'      => '/sqldialects.xml',
         'symfony'          => '/symfony2.xml',
+        'laravel'          => '/laravel-plugin.xml',
         'webResources'     => '/webResources.xml',
     ];
 
@@ -146,6 +147,11 @@ class IdeaProject
     public function getSymfony(): Node
     {
         return $this->getGeneric('symfony');
+    }
+
+    public function getLaravel(): Node
+    {
+        return $this->getGeneric('laravel');
     }
 
     public function getWebResources(): Node
