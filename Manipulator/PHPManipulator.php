@@ -122,7 +122,15 @@ class PHPManipulator
             if ($composerLockHelper->hasPackage('phpunit/phpunit')) {
                 $loader = 'vendor/autoload.php';
             } elseif ($composerLockHelper->hasPackage('symfony/phpunit-bridge')) {
-                $phpUnit = new Process($projectRootDir . '/vendor/symfony/phpunit-bridge/bin/simple-phpunit --version');
+                $phpUnitPath = $projectRootDir . '/vendor/symfony/phpunit-bridge/bin/simple-phpunit';
+
+                if (!file_exists($phpUnitPath)) {
+                    throw new \RuntimeException(
+                        'Cannot find simple PHPUnit. Have you done "composer install" on this project?'
+                    );
+                }
+
+                $phpUnit = new Process($phpUnitPath . ' --version');
 
                 $phpUnit->run();
 
