@@ -89,6 +89,11 @@ class IDEConfiguration
      */
     private $runs;
 
+    /**
+     * @var string[]
+     */
+    private $knownEnvironmentVariables;
+
     public function __construct(string $ideConfigurationYamlPath)
     {
         $ideConfig = Yaml::parse(file_get_contents($ideConfigurationYamlPath));
@@ -157,32 +162,62 @@ class IDEConfiguration
         }
     }
 
-    private function resolveDependencies(array $ideConfig): array
+    private function getEnvironmentVariable(string $environmentVariable): string
+    {
+        if (isset($this->knownEnvironmentVariables[$environmentVariable])) {
+            return $this->knownEnvironmentVariables[$environmentVariable];
+        }
+
+        $value = getenv($environmentVariable);
+
+        if (false === $value) {
+            throw new \RuntimeException(
+                sprintf(
+                    'On ide-config.yaml you are making use of an environment variable, %s, but is not set',
+                    $environmentVariable,
+                )
+            );
+        }
+
+        return $this->knownEnvironmentVariables[$environmentVariable] = $value;
+    }
+
+    private function replaceEnvironmentVariablesInString(string $string): string
+    {
+        $numberMatches = preg_match_all('/env\((?\'var\'\w+?)\)/', $string, $matches);
+
+        if (false === $numberMatches) {
+            throw new \RuntimeException('Something went wrong when replacing the environment variables');
+        }
+
+        if (0 < $numberMatches) {
+            foreach (array_unique($matches['var']) as $environmentVariable) {
+                $string = str_replace(
+                    'env(' . $environmentVariable . ')',
+                    $this->getEnvironmentVariable($environmentVariable),
+                    $string
+                );
+            }
+        }
+
+        return $string;
+    }
+
+    private function resolveDependencies(array $configArray): array
     {
         $resolved = [];
 
-        foreach ($ideConfig as $key => $value) {
+        foreach ($configArray as $key => $value) {
+            $newKey = is_string($key)
+                ? $this->replaceEnvironmentVariablesInString($key)
+                : $key;
+
             if (is_array($value)) {
-                $resolved[$key] = $this->resolveDependencies($value);
+                $resolved[$newKey] = $this->resolveDependencies($value);
             } elseif (is_string($value)) {
-                if (0 === strpos($value, 'env(') && ')' === substr($value, -1)) {
-                    $environmentValue = getenv(substr($value, 4, -1));
-
-                    if (false === $environmentValue) {
-                        throw new \RuntimeException(
-                            sprintf(
-                                'On ide-config.yaml you are making use of an environment variable, %s, but is not set',
-                                $value
-                            )
-                        );
-                    }
-
-                    $resolved[$key] = $environmentValue;
-                } else {
-                    $resolved[$key] = $value;
-                }
+                $resolved[$newKey] = $this->replaceEnvironmentVariablesInString($value);
             } else {
-                $resolved[$key] = $value;
+                $resolved[$newKey] = $value;
             }
         }
 
