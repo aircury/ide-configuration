@@ -19,7 +19,7 @@ class WorkspaceManipulator
             $composerSettings['doNotAsk'] = 'true';
         }
 
-        $pharConfigPath           = $composerSettings->getNamedChild('pharConfigPath');
+        $pharConfigPath = $composerSettings->getNamedChild('pharConfigPath');
         $pharConfigPath->contents = '$PROJECT_DIR$/composer.json';
 
         if ($composer->getSynchronize()) {
@@ -79,9 +79,9 @@ class WorkspaceManipulator
     public function addRuns(Node $workspace, RunCollection $runs): void
     {
         $selectedTypes = [
-            'Behat'               => 'Behat',
-            'PHPUnit'             => 'PHPUnit',
-            'PHP Console'         => 'PHP Script',
+            'Behat' => 'Behat',
+            'PHPUnit' => 'PHPUnit',
+            'PHP Console' => 'PHP Script',
             'PHP Web Application' => 'PHP Web Application',
         ];
 
@@ -94,18 +94,18 @@ class WorkspaceManipulator
 
             switch ($runSettings->getType()) {
                 case 'Behat':
-                    $configuration['type']        = 'PhpBehatConfigurationType';
+                    $configuration['type'] = 'PhpBehatConfigurationType';
                     $configuration['factoryName'] = 'Behat';
 
                     $behatRunner = $configuration->getNamedChild('BehatRunner');
 
                     $behatRunner['directory'] = '$PROJECT_DIR$/' . $runSettings->getFolder();
-                    $behatRunner['scenario']  = '';
+                    $behatRunner['scenario'] = '';
 
                     $configureBehatDefaults = true;
                     break;
                 case 'PHPUnit':
-                    $configuration['type']        = 'PHPUnitRunConfigurationType';
+                    $configuration['type'] = 'PHPUnitRunConfigurationType';
                     $configuration['factoryName'] = 'PHPUnit';
 
                     $testRunner = $configuration->getNamedChild('TestRunner');
@@ -115,9 +115,9 @@ class WorkspaceManipulator
                     //$testRunner['scenario']  = '';
                     break;
                 case 'PHP Console':
-                    $configuration['type']             = 'PhpLocalRunConfigurationType';
-                    $configuration['factoryName']      = 'PHP Console';
-                    $configuration['path']             = '$PROJECT_DIR$/' . $runSettings->getScript();
+                    $configuration['type'] = 'PhpLocalRunConfigurationType';
+                    $configuration['factoryName'] = 'PHP Console';
+                    $configuration['path'] = '$PROJECT_DIR$/' . $runSettings->getScript();
                     $configuration['scriptParameters'] = $runSettings->getParameters();
 
                     if (!empty($environment = $runSettings->getEnvironment())) {
@@ -132,10 +132,10 @@ class WorkspaceManipulator
 
                     break;
                 case 'PHP Web Application':
-                    $configuration['type']        = 'PhpWebAppRunConfigurationType';
+                    $configuration['type'] = 'PhpWebAppRunConfigurationType';
                     $configuration['factoryName'] = 'PHP Web Application';
                     $configuration['server_name'] = $runSettings->getServer();
-                    $configuration['start_url']   = $runSettings->getUrl();
+                    $configuration['start_url'] = $runSettings->getUrl();
                     break;
                 default:
                     throw new \RuntimeException('Not implemented: ' . $runSettings->getType());
@@ -146,8 +146,8 @@ class WorkspaceManipulator
             $configuration = $run->getNamedChild(
                 'configuration',
                 [
-                    'type'        => 'PhpBehatConfigurationType',
-                    'default'     => 'true',
+                    'type' => 'PhpBehatConfigurationType',
+                    'default' => 'true',
                     'factoryName' => 'Behat',
                 ]
             );
@@ -158,7 +158,7 @@ class WorkspaceManipulator
         }
 
         // Mark the first one as selected
-        $selected        = $runs->first();
+        $selected = $runs->first();
         $run['selected'] = $selectedTypes[$selected->getType()] . '.' . $selected->getName();
     }
 

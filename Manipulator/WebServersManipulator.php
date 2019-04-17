@@ -11,20 +11,20 @@ class WebServersManipulator
     public function addDeployment(Node $webServers, DeploymentCollection $deployments): void
     {
         foreach ($deployments->toArray() as $deploymentName => $deployment) {
-            $webServer    = $webServers
+            $webServer = $webServers
                 ->getNamedChild('component', ['name' => 'WebServers'])
                 ->getNamedChild('option', ['name' => 'servers'])
                 ->getNamedChild('webServer', ['name' => $deploymentName]);
             $fileTransfer = $webServer->getNamedChild('fileTransfer');
 
-            $webServer['id']  = $webServer['id'] ?? Uuid::generate(4)->string;
+            $webServer['id'] = $webServer['id'] ?? Uuid::generate(4)->string;
             $webServer['url'] = $deployment->getUrl();
 
-            $fileTransfer['host']       = $deployment->getHost();
-            $fileTransfer['port']       = $deployment->getPort();
+            $fileTransfer['host'] = $deployment->getHost();
+            $fileTransfer['port'] = $deployment->getPort();
             $fileTransfer['privateKey'] = $deployment->getPrivateKey();
             $fileTransfer['accessType'] = $deployment->getType();
-            $fileTransfer['keyPair']    = 'true';
+            $fileTransfer['keyPair'] = 'true';
 
             $fileTransfer
                 ->getNamedChild('advancedOptions')

@@ -29,9 +29,9 @@ class Behat
             $this->configureOptions(self::$optionResolver);
         }
 
-        $options             = self::$optionResolver->resolve($options);
+        $options = self::$optionResolver->resolve($options);
         $this->configuration = $options['configuration'];
-        $this->binPath       = $options['bin_path'];
+        $this->binPath = $options['bin_path'];
     }
 
     private function configureOptions(OptionsResolver $resolver): void

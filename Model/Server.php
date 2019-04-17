@@ -35,9 +35,9 @@ class Server
             $this->configureOptions(self::$optionResolver);
         }
 
-        $this->name     = $name;
-        $options        = self::$optionResolver->resolve($options);
-        $this->host     = $options['host'];
+        $this->name = $name;
+        $options = self::$optionResolver->resolve($options);
+        $this->host = $options['host'];
         $this->mappings = $options['mappings'];
     }
 

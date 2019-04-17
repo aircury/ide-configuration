@@ -60,15 +60,15 @@ class Run
             $this->configureOptions(self::$optionResolver);
         }
 
-        $this->name        = $name;
-        $options           = self::$optionResolver->resolve($options);
-        $this->type        = $options['type'];
-        $this->folder      = $options['folder'];
-        $this->parameters  = $options['parameters'];
-        $this->script      = $options['script'];
+        $this->name = $name;
+        $options = self::$optionResolver->resolve($options);
+        $this->type = $options['type'];
+        $this->folder = $options['folder'];
+        $this->parameters = $options['parameters'];
+        $this->script = $options['script'];
         $this->environment = $options['environment'];
-        $this->server      = $options['server'];
-        $this->url         = $options['url'];
+        $this->server = $options['server'];
+        $this->url = $options['url'];
     }
 
     private function configureOptions(OptionsResolver $resolver): void

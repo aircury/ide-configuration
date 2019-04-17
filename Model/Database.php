@@ -65,15 +65,15 @@ class Database
             $this->configureOptions(self::$optionResolver);
         }
 
-        $this->name     = $name;
-        $options        = self::$optionResolver->resolve($options);
-        $this->driver   = $options['driver'];
-        $this->host     = $options['host'];
-        $this->port     = strval($options['port']);
+        $this->name = $name;
+        $options = self::$optionResolver->resolve($options);
+        $this->driver = $options['driver'];
+        $this->host = $options['host'];
+        $this->port = strval($options['port']);
         $this->database = $options['database'];
         $this->username = $options['username'];
-        $this->path     = $options['path'];
-        $this->schemas  = $options['schemas'];
+        $this->path = $options['path'];
+        $this->schemas = $options['schemas'];
     }
 
     private function configureOptions(OptionsResolver $resolver): void

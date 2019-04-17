@@ -11,7 +11,7 @@ class ComposerLockHelper
         $composerLockPath = $projectRootDir . '/composer.lock';
 
         if (!file_exists($composerLockPath)) {
-            return ;
+            return;
         }
 
         $this->contents = json_decode(file_get_contents($composerLockPath), true);

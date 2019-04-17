@@ -9,23 +9,23 @@ use Webpatser\Uuid\Uuid;
 class DataSourcesManipulator
 {
     private const DRIVER_REF_NAMES = [
-        'mysql'      => 'mysql',
+        'mysql' => 'mysql',
         'postgresql' => 'postgresql',
-        'sqlite'     => 'sqlite.xerial',
+        'sqlite' => 'sqlite.xerial',
     ];
 
     public function addDatabases(Node $dataSources, DatabaseCollection $databases): void
     {
         $dataSourceManager = $dataSources->getNamedChild('component', ['name' => 'DataSourceManagerImpl']);
 
-        $dataSourceManager['format']          = 'xml';
+        $dataSourceManager['format'] = 'xml';
         $dataSourceManager['multifile-model'] = 'true';
 
         foreach ($databases->toArray() as $databaseName => $database) {
             $dataSource = $dataSourceManager->getNamedChild('data-source', ['name' => $databaseName]);
 
             $dataSource['source'] = 'LOCAL';
-            $dataSource['uuid']   = $dataSource['uuid'] ?? Uuid::generate(4)->string;
+            $dataSource['uuid'] = $dataSource['uuid'] ?? Uuid::generate(4)->string;
 
             $database->setId($dataSource['uuid']);
 
@@ -44,7 +44,7 @@ class DataSourcesManipulator
             }
 
             $dataSource->getNamedChild('synchronize')->contents = 'true';
-            $dataSource->getNamedChild('driver-ref')->contents  = self::DRIVER_REF_NAMES[$database->getDriver()];
+            $dataSource->getNamedChild('driver-ref')->contents = self::DRIVER_REF_NAMES[$database->getDriver()];
 
             if (null === $database->getPath()) {
                 $dataSource->getNamedChild('jdbc-url')->contents = sprintf(

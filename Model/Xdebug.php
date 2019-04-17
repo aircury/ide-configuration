@@ -24,7 +24,7 @@ class Xdebug
             $this->configureOptions(self::$optionResolver);
         }
 
-        $options    = self::$optionResolver->resolve($options);
+        $options = self::$optionResolver->resolve($options);
         $this->port = null === $options['port'] ? null : intval($options['port']);
     }
 

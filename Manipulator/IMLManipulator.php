@@ -9,16 +9,16 @@ class IMLManipulator
 {
     public function addIML(Node $iml, IDEConfiguration $configuration, string $moduleName): void
     {
-        $module         = $configuration->getModule($moduleName);
-        $iml['type']    = 'WEB_MODULE';
+        $module = $configuration->getModule($moduleName);
+        $iml['type'] = 'WEB_MODULE';
         $iml['version'] = 4;
-        $component      = $iml->getNamedChild('component', ['name' => 'NewModuleRootManager']);
+        $component = $iml->getNamedChild('component', ['name' => 'NewModuleRootManager']);
 
         $component['inherit-compiler-output'] = 'true';
 
         $component->getNamedChild('exclude-output');
 
-        $content        = $component->getNamedChild('content');
+        $content = $component->getNamedChild('content');
         $content['url'] = 'file://$MODULE_DIR$';
 
         foreach ($module->getExcluded() as $excludedFolder) {

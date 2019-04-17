@@ -24,7 +24,7 @@ class JavaScript
             $this->configureOptions(self::$optionResolver);
         }
 
-        $options             = self::$optionResolver->resolve($options);
+        $options = self::$optionResolver->resolve($options);
         $this->languageLevel = $options['language_level'];
     }
 

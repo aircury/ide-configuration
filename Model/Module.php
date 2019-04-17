@@ -55,12 +55,12 @@ class Module
             $this->configureOptions(self::$optionResolver);
         }
 
-        $this->name      = $name;
-        $options         = self::$optionResolver->resolve($options);
-        $this->root      = $options['root'];
-        $this->excluded  = $options['excluded'];
-        $this->sources   = $options['sources'];
-        $this->tests     = $options['tests'];
+        $this->name = $name;
+        $options = self::$optionResolver->resolve($options);
+        $this->root = $options['root'];
+        $this->excluded = $options['excluded'];
+        $this->sources = $options['sources'];
+        $this->tests = $options['tests'];
         $this->libraries = $options['libraries'];
         $this->resources = $options['resources'];
     }

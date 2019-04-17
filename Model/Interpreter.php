@@ -69,13 +69,13 @@ class Interpreter
             $this->configureOptions(self::$optionResolver);
         }
 
-        $this->name       = $name;
-        $options          = self::$optionResolver->resolve($options);
-        $this->type       = $options['type'];
-        $this->username   = $options['username'];
-        $this->host       = $options['host'];
-        $this->port       = strval($options['port']);
-        $this->phpPath    = $options['php_path'];
+        $this->name = $name;
+        $options = self::$optionResolver->resolve($options);
+        $this->type = $options['type'];
+        $this->username = $options['username'];
+        $this->host = $options['host'];
+        $this->port = strval($options['port']);
+        $this->phpPath = $options['php_path'];
         $this->privateKey = $options['private_key'];
 
         if (!empty($options['phpunit'])) {

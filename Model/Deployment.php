@@ -55,14 +55,14 @@ class Deployment
             $this->configureOptions(self::$optionResolver);
         }
 
-        $this->name       = $name;
-        $options          = self::$optionResolver->resolve($options);
-        $this->type       = $options['type'];
-        $this->host       = $options['host'];
-        $this->url        = $options['url'];
-        $this->port       = strval($options['port']);
+        $this->name = $name;
+        $options = self::$optionResolver->resolve($options);
+        $this->type = $options['type'];
+        $this->host = $options['host'];
+        $this->url = $options['url'];
+        $this->port = strval($options['port']);
         $this->privateKey = $options['private_key'];
-        $this->mappings   = $options['mappings'];
+        $this->mappings = $options['mappings'];
     }
 
     private function configureOptions(OptionsResolver $resolver): void

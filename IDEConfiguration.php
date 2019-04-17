@@ -174,7 +174,7 @@ class IDEConfiguration
             throw new \RuntimeException(
                 sprintf(
                     'On ide-config.yaml you are making use of an environment variable, %s, but is not set',
-                    $environmentVariable,
+                    $environmentVariable
                 )
             );
         }
@@ -184,7 +184,7 @@ class IDEConfiguration
 
     private function replaceEnvironmentVariablesInString(string $string): string
     {
-        $numberMatches = preg_match_all('/env\((?\'var\'\w+?)\)/', $string, $matches);
+        $numberMatches = preg_match_all('/env\\((?\'var\'\\w+?)\\)/', $string, $matches);
 
         if (false === $numberMatches) {
             throw new \RuntimeException('Something went wrong when replacing the environment variables');

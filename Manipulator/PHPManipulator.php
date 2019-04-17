@@ -71,17 +71,17 @@ class PHPManipulator
 
                 $remoteData = $interpreter->getNamedChild('remote_data');
 
-                $remoteData['HOST']                = $interpreterSettings->getHost();
-                $remoteData['PORT']                = $interpreterSettings->getPort();
-                $remoteData['USERNAME']            = $interpreterSettings->getUsername();
-                $remoteData['PRIVATE_KEY_FILE']    = $interpreterSettings->getPrivateKey();
+                $remoteData['HOST'] = $interpreterSettings->getHost();
+                $remoteData['PORT'] = $interpreterSettings->getPort();
+                $remoteData['USERNAME'] = $interpreterSettings->getUsername();
+                $remoteData['PRIVATE_KEY_FILE'] = $interpreterSettings->getPrivateKey();
                 $remoteData['MY_KNOWN_HOSTS_FILE'] = '';
-                $remoteData['USE_KEY_PAIR']        = 'true';
-                $remoteData['USE_AUTH_AGENT']      = 'false';
-                $remoteData['INTERPRETER_PATH']    = $interpreterSettings->getPHPPath();
-                $remoteData['HELPERS_PATH']        = $projectRootDir . '/.phpstorm_helpers';
-                $remoteData['INITIALIZED']         = 'false';
-                $remoteData['VALID']               = 'true';
+                $remoteData['USE_KEY_PAIR'] = 'true';
+                $remoteData['USE_AUTH_AGENT'] = 'false';
+                $remoteData['INTERPRETER_PATH'] = $interpreterSettings->getPHPPath();
+                $remoteData['HELPERS_PATH'] = $projectRootDir . '/.phpstorm_helpers';
+                $remoteData['INITIALIZED'] = 'false';
+                $remoteData['VALID'] = 'true';
             }
         }
     }
@@ -98,8 +98,8 @@ class PHPManipulator
             ->getNamedChild('behat_by_interpreter', ['interpreter_id' => $interpreter->getId()]);
 
         $behat['configuration_file_path'] = $projectRootDir . '/' . $behatConfiguration->getConfiguration();
-        $behat['behat_path']              = $projectRootDir . '/' . $behatConfiguration->getBinPath();
-        $behat['use_configuration_file']  = 'true';
+        $behat['behat_path'] = $projectRootDir . '/' . $behatConfiguration->getBinPath();
+        $behat['use_configuration_file'] = 'true';
     }
 
     public function addPHPUnit(
@@ -113,7 +113,7 @@ class PHPManipulator
             ->getNamedChild('phpunit_settings')
             ->getNamedChild('phpunit_by_interpreter', ['interpreter_id' => $interpreter->getId()]);
 
-        $phpunit['load_method']             = 'CUSTOM_LOADER';
+        $phpunit['load_method'] = 'CUSTOM_LOADER';
         $phpunit['configuration_file_path'] = $projectRootDir . '/' . $phpunitConfiguration->getConfiguration();
 
         if ('auto' === ($loader = $phpunitConfiguration->getLoader())) {
@@ -135,8 +135,8 @@ class PHPManipulator
                 $phpUnit->run();
 
                 $phpUnitVersion = implode('.', array_slice(explode('.', explode(' ', $phpUnit->getOutput())[1]), 0, 2));
-                $loaderDir      = 'vendor/bin/.phpunit/phpunit-' . $phpUnitVersion;
-                $loader         = $loaderDir . '/vendor/autoload.php';
+                $loaderDir = 'vendor/bin/.phpunit/phpunit-' . $phpUnitVersion;
+                $loader = $loaderDir . '/vendor/autoload.php';
 
                 // PHPStorm needs this file to exist to launch, so just symlink it
 
@@ -156,8 +156,8 @@ class PHPManipulator
             }
         }
 
-        $phpunit['custom_loader_path']     = $projectRootDir . '/' . $loader;
-        $phpunit['phpunit_phar_path']      = '';
+        $phpunit['custom_loader_path'] = $projectRootDir . '/' . $loader;
+        $phpunit['phpunit_phar_path'] = '';
         $phpunit['use_configuration_file'] = 'true';
     }
 }

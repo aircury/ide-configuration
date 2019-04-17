@@ -29,8 +29,8 @@ class Composer
             $this->configureOptions(self::$optionResolver);
         }
 
-        $options           = self::$optionResolver->resolve($options);
-        $this->ask         = $options['ask'];
+        $options = self::$optionResolver->resolve($options);
+        $this->ask = $options['ask'];
         $this->synchronize = $options['synchronize'];
     }
 

@@ -29,7 +29,7 @@ class DeploymentManipulator
                     $mapping = $mappings->getNamedChild('mapping', ['local' => $localPath]);
 
                     $mapping['deploy'] = $deploymentPath;
-                    $mapping['web']    = '/';
+                    $mapping['web'] = '/';
                 }
             }
         }

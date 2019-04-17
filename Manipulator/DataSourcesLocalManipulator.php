@@ -19,9 +19,8 @@ class DataSourcesLocalManipulator
             switch ($database->getDriver()) {
                 case 'postgresql':
                     if (!empty($schemas = $database->getSchemas())) {
-                        $localDataSource
-                            ->getNamedChild('introspection-schemas')
-                            ->contents = $database->getDatabase() . ':' . implode(',', $schemas);
+                        $localDataSource->getNamedChild('introspection-schemas')->contents = $database->getDatabase() .
+                            ':' . implode(',', $schemas);
                     }
 
                     break;

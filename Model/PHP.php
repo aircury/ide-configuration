@@ -34,9 +34,9 @@ class PHP
             $this->configureOptions(self::$optionResolver);
         }
 
-        $options             = self::$optionResolver->resolve($options);
+        $options = self::$optionResolver->resolve($options);
         $this->languageLevel = $options['language_level'];
-        $this->interpreters  = new InterpreterCollection();
+        $this->interpreters = new InterpreterCollection();
 
         if (!empty($options['xdebug'])) {
             $this->xdebug = new Xdebug($options['xdebug']);

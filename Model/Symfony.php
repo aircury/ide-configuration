@@ -29,7 +29,7 @@ class Symfony
             $this->configureOptions(self::$optionResolver);
         }
 
-        $options   = self::$optionResolver->resolve($options);
+        $options = self::$optionResolver->resolve($options);
         $this->web = $options['web'];
         $this->app = $options['app'];
     }

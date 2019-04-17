@@ -21,8 +21,8 @@ class PHPTestFrameworkManipulator
             ->getNamedChild('tool', ['tool_name' => 'Behat'])
             ->getNamedChild('cache')
             ->getNamedChild('versions')
-            ->getNamedChild('info', ['id' => 'interpreter-' . $interpreter->getId()])
-        ['version'] = $composerLockHelper->getPackageVersion('behat/behat');
+            ->getNamedChild('info', ['id' => 'interpreter-' . $interpreter->getId()])['version'] = $composerLockHelper
+                ->getPackageVersion('behat/behat');
     }
 
     public function addPHPUnit(Node $phpTestFramework, Interpreter $interpreter, string $projectRootDir): void
@@ -54,7 +54,6 @@ class PHPTestFrameworkManipulator
             ->getNamedChild('tool', ['tool_name' => 'PHPUnit'])
             ->getNamedChild('cache')
             ->getNamedChild('versions')
-            ->getNamedChild('info', ['id' => 'interpreter-' . $interpreter->getId()])
-        ['version'] = $phpUnitVersion;
+            ->getNamedChild('info', ['id' => 'interpreter-' . $interpreter->getId()])['version'] = $phpUnitVersion;
     }
 }

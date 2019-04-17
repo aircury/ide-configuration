@@ -29,9 +29,9 @@ class PHPUnit
             $this->configureOptions(self::$optionResolver);
         }
 
-        $options             = self::$optionResolver->resolve($options);
+        $options = self::$optionResolver->resolve($options);
         $this->configuration = $options['configuration'];
-        $this->loader        = $options['loader'];
+        $this->loader = $options['loader'];
     }
 
     private function configureOptions(OptionsResolver $resolver): void
