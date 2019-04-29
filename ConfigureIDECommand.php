@@ -140,7 +140,8 @@ class ConfigureIDECommand extends Command
                                 $phpTestFrameworkManipulator->addBehat(
                                     $phpTestFramework,
                                     $interpreter,
-                                    $projectRootDir
+                                    $projectRootDir,
+                                    $behat
                                 );
                             }
 
