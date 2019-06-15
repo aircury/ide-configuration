@@ -88,18 +88,15 @@ class ConfigureIDECommand extends Command
         foreach ($finder as $file) {
             /** @var SplFileInfo $file */
 
+            $path = $file->getRealPath();
+
             $output->writeln(
-                sprintf(
-                    '<info>Found configuration file at <comment>%s</comment>. Configuring...</info>',
-                    $file->getRealPath()
-                )
+                sprintf('<info>Found configuration file at <comment>%s</comment>. Configuring...</info>', $path)
             );
 
-            $ideConfiguration = new IDEConfiguration($file->getRealPath());
-            $ideaPath = dirname($file->getRealPath()) . '/.idea';
-            $projectRootDir = dirname($file->getRealPath(), 1);
-            $projectsRootDir = dirname($file->getRealPath(), 2);
-            $project = new IdeaProject($ideaPath);
+            $ideConfiguration = new IDEConfiguration($path);
+            $projectRootDir = dirname($path);
+            $project = new IdeaProject(dirname($path) . '/.idea');
 
             $modulesManipulator->addModules($project->getModules(), $ideConfiguration);
 
@@ -124,29 +121,39 @@ class ConfigureIDECommand extends Command
             $servers = $ideConfiguration->getServers();
 
             if (!$servers->isEmpty()) {
+                $projectRemoteRootDir = $ideConfiguration->getServers()->first()->getMappings()['$PROJECT_DIR$'];
+                $projectsRemoteRootDir = dirname($projectRemoteRootDir);
+
                 $workspaceManipulator->addServers($workspace = $project->getWorkspace(), $ideConfiguration);
 
-                if (null !== ($php = $ideConfiguration->getPHP())) {
+                if (null !== ($phpConfig = $ideConfiguration->getPHP())) {
                     $workspaceManipulator->addPHP($workspace, $ideConfiguration);
-                    $phpManipulator->addPHP($php = $project->getPHP(), $ideConfiguration, $projectsRootDir);
+                    $phpManipulator->addPHP($php = $project->getPHP(), $ideConfiguration, $projectsRemoteRootDir);
 
-                    $interpreters = $ideConfiguration->getPHP()->getInterpreters();
+                    $interpreters = $phpConfig->getInterpreters();
                     $phpTestFramework = $project->getPHPTestFramework();
 
                     if (!$interpreters->isEmpty()) {
                         foreach ($interpreters->toArray() as $interpreterName => $interpreter) {
                             if (null !== ($behat = $interpreter->getBehat())) {
-                                $phpManipulator->addBehat($php, $behat, $interpreter, $projectRootDir);
+                                $phpManipulator->addBehat($php, $behat, $interpreter, $projectRemoteRootDir);
                                 $phpTestFrameworkManipulator->addBehat(
                                     $phpTestFramework,
                                     $interpreter,
                                     $projectRootDir,
+                                    $projectRemoteRootDir,
                                     $behat
                                 );
                             }
 
                             if (null !== ($phpunit = $interpreter->getPHPUnit())) {
-                                $phpManipulator->addPHPUnit($php, $phpunit, $interpreter, $projectRootDir);
+                                $phpManipulator->addPHPUnit(
+                                    $php,
+                                    $phpunit,
+                                    $interpreter,
+                                    $projectRootDir,
+                                    $projectRemoteRootDir
+                                );
                                 $phpTestFrameworkManipulator->addPHPUnit(
                                     $phpTestFramework,
                                     $interpreter,

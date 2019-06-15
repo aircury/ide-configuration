@@ -14,7 +14,7 @@ use Webpatser\Uuid\Uuid;
 
 class PHPManipulator
 {
-    public function addPHP(Node $php, IDEConfiguration $configuration, string $projectRootDir): void
+    public function addPHP(Node $php, IDEConfiguration $configuration, string $projectsRemoteRootDir): void
     {
         $phpConfiguration = $configuration->getPHP();
 
@@ -79,7 +79,7 @@ class PHPManipulator
                 $remoteData['USE_KEY_PAIR'] = 'true';
                 $remoteData['USE_AUTH_AGENT'] = 'false';
                 $remoteData['INTERPRETER_PATH'] = $interpreterSettings->getPHPPath();
-                $remoteData['HELPERS_PATH'] = $projectRootDir . '/.phpstorm_helpers';
+                $remoteData['HELPERS_PATH'] = $projectsRemoteRootDir . '/.phpstorm_helpers';
                 $remoteData['INITIALIZED'] = 'false';
                 $remoteData['VALID'] = 'true';
             }
@@ -90,15 +90,15 @@ class PHPManipulator
         Node $php,
         Behat $behatConfiguration,
         Interpreter $interpreter,
-        string $projectRootDir
+        string $projectRemoteRootDir
     ): void {
         $behat = $php
             ->getNamedChild('component', ['name' => 'Behat'])
             ->getNamedChild('behat_settings')
             ->getNamedChild('behat_by_interpreter', ['interpreter_id' => $interpreter->getId()]);
 
-        $behat['configuration_file_path'] = $projectRootDir . '/' . $behatConfiguration->getConfiguration();
-        $behat['behat_path'] = $projectRootDir . '/' . $behatConfiguration->getBinPath();
+        $behat['configuration_file_path'] = $projectRemoteRootDir . '/' . $behatConfiguration->getConfiguration();
+        $behat['behat_path'] = $projectRemoteRootDir . '/' . $behatConfiguration->getBinPath();
         $behat['use_configuration_file'] = 'true';
     }
 
@@ -106,7 +106,8 @@ class PHPManipulator
         Node $php,
         PHPUnit $phpunitConfiguration,
         Interpreter $interpreter,
-        string $projectRootDir
+        string $projectRootDir,
+        string $projectRemoteRootDir
     ): void {
         $phpunit = $php
             ->getNamedChild('component', ['name' => 'PhpUnit'])
@@ -114,7 +115,7 @@ class PHPManipulator
             ->getNamedChild('phpunit_by_interpreter', ['interpreter_id' => $interpreter->getId()]);
 
         $phpunit['load_method'] = 'CUSTOM_LOADER';
-        $phpunit['configuration_file_path'] = $projectRootDir . '/' . $phpunitConfiguration->getConfiguration();
+        $phpunit['configuration_file_path'] = $projectRemoteRootDir . '/' . $phpunitConfiguration->getConfiguration();
 
         if ('auto' === ($loader = $phpunitConfiguration->getLoader())) {
             $composerLockHelper = new ComposerLockHelper($projectRootDir);
@@ -156,7 +157,7 @@ class PHPManipulator
             }
         }
 
-        $phpunit['custom_loader_path'] = $projectRootDir . '/' . $loader;
+        $phpunit['custom_loader_path'] = $projectRemoteRootDir . '/' . $loader;
         $phpunit['phpunit_phar_path'] = '';
         $phpunit['use_configuration_file'] = 'true';
     }

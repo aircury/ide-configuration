@@ -14,6 +14,7 @@ class PHPTestFrameworkManipulator
         Node $phpTestFramework,
         Interpreter $interpreter,
         string $projectRootDir,
+        string $projectRemoteRootDir,
         Behat $behatConfiguration
     ): void {
         $configurationBySDK = $phpTestFramework
@@ -24,8 +25,9 @@ class PHPTestFrameworkManipulator
             ->getNamedChild('configurations')
             ->getNamedChild('configuration_by_sdk', ['interpreter_id' => $interpreter->getId()]);
 
-        $configurationBySDK['configuration_file_path'] = $projectRootDir . '/' . $behatConfiguration->getConfiguration();
-        $configurationBySDK['executable_path'] = $projectRootDir . '/' . $behatConfiguration->getBinPath();
+        $configurationBySDK['configuration_file_path'] = $projectRemoteRootDir . '/' .
+            $behatConfiguration->getConfiguration();
+        $configurationBySDK['executable_path'] = $projectRemoteRootDir . '/' . $behatConfiguration->getBinPath();
         $composerLockHelper['use_configuration_file'] = 'true';
 
         $toolsCache = $phpTestFramework
