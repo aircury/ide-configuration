@@ -25,6 +25,7 @@ class IdeaProject
         'symfony' => '/symfony2.xml',
         'laravel' => '/laravel-plugin.xml',
         'webResources' => '/webResources.xml',
+        'databaseColors' => '/databaseColors.xml',
     ];
 
     /**
@@ -157,6 +158,11 @@ class IdeaProject
     public function getWebResources(): Node
     {
         return $this->getGeneric('webResources');
+    }
+
+    public function getDatabaseColors(): Node
+    {
+        return $this->getGeneric('databaseColors');
     }
 
     public function dump(): void

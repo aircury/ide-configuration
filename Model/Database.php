@@ -53,6 +53,11 @@ class Database
     private $schemas;
 
     /**
+     * @var string|null
+     */
+    private $color;
+
+    /**
      * @var string
      */
     private $id;
@@ -69,11 +74,12 @@ class Database
         $options = self::$optionResolver->resolve($options);
         $this->driver = $options['driver'];
         $this->host = $options['host'];
-        $this->port = strval($options['port']);
+        $this->port = (string) $options['port'];
         $this->database = $options['database'];
         $this->username = $options['username'];
         $this->path = $options['path'];
         $this->schemas = $options['schemas'];
+        $this->color = $options['color'];
     }
 
     private function configureOptions(OptionsResolver $resolver): void
@@ -137,6 +143,9 @@ class Database
                 return $mappings;
             }
         );
+
+        $resolver->setDefault('color', null);
+        $resolver->setAllowedTypes('color', ['null', 'string']);
     }
 
     public function getName(): string
@@ -172,6 +181,11 @@ class Database
     public function getPath(): ?string
     {
         return $this->path;
+    }
+
+    public function getColor(): ?string
+    {
+        return $this->color;
     }
 
     /**

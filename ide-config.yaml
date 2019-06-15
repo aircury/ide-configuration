@@ -11,3 +11,13 @@ modules:
             - vendor
 composer:
     synchronize: true
+servers:
+    aircury:
+        host: aircury.local
+        mappings:
+            $PROJECT_DIR$: /var/www/aircury/src/IDEConfiguration
+php:
+    language_level: 7.1
+    xdebug:
+        port: env(XDEBUG_REMOTE_PORT)
+

@@ -3,6 +3,7 @@
 namespace Aircury\IDEConfiguration;
 
 use Aircury\IDEConfiguration\Idea\IdeaProject;
+use Aircury\IDEConfiguration\Manipulator\DatabaseColorsManipulator;
 use Aircury\IDEConfiguration\Manipulator\DataSourcesLocalManipulator;
 use Aircury\IDEConfiguration\Manipulator\DataSourcesManipulator;
 use Aircury\IDEConfiguration\Manipulator\DeploymentManipulator;
@@ -84,6 +85,7 @@ class ConfigureIDECommand extends Command
         $symfonyManipulator = new SymfonyManipulator();
         $laravelManipulator = new LaravelManipulator();
         $encodingsManipulator = new EncodingsManipulator();
+        $databaseColorsManipulator = new DatabaseColorsManipulator();
 
         foreach ($finder as $file) {
             /** @var SplFileInfo $file */
@@ -187,6 +189,7 @@ class ConfigureIDECommand extends Command
             if (!$databases->isEmpty()) {
                 $dataSourcesManipulator->addDatabases($project->getDataSources(), $databases);
                 $dataSourcesLocalManipulator->addDatabases($project->getDataSourcesLocal(), $databases);
+                $databaseColorsManipulator->addColours($project->getDatabaseColors(), $databases);
             }
 
             if (null !== ($sqlDialects = $ideConfiguration->getSQLDialects())) {
