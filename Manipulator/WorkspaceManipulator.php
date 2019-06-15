@@ -44,7 +44,7 @@ class WorkspaceManipulator
             }
 
             $server = $existingServers->isEmpty()
-                ? $servers->addChild(new Node('server', ['name' => $serverName, 'id' => Uuid::generate(4)->string]))
+                ? $servers->getNamedChild('server', ['name' => $serverName, 'id' => Uuid::generate(4)->string])
                 : $existingServers->first();
 
             if (null !== ($host = $serverSettings->getHost())) {
