@@ -58,6 +58,11 @@ class Database
     private $color;
 
     /**
+     * @var bool
+     */
+    private $readOnly;
+
+    /**
      * @var string
      */
     private $id;
@@ -80,6 +85,7 @@ class Database
         $this->path = $options['path'];
         $this->schemas = $options['schemas'];
         $this->color = $options['color'];
+        $this->readOnly = $options['read_only'];
     }
 
     private function configureOptions(OptionsResolver $resolver): void
@@ -146,6 +152,9 @@ class Database
 
         $resolver->setDefault('color', null);
         $resolver->setAllowedTypes('color', ['null', 'string']);
+
+        $resolver->setDefault('read_only', false);
+        $resolver->setAllowedTypes('read_only', 'bool');
     }
 
     public function getName(): string
@@ -204,5 +213,10 @@ class Database
     public function getId(): string
     {
         return $this->id;
+    }
+
+    public function isReadOnly(): bool
+    {
+        return $this->readOnly;
     }
 }

@@ -24,6 +24,12 @@ class DataSourcesManipulator
         foreach ($databases->toArray() as $databaseName => $database) {
             $dataSource = $dataSourceManager->getNamedChild('data-source', ['name' => $databaseName]);
 
+            if ($database->isReadOnly()) {
+                $dataSource['read-only'] = 'true';
+            } else {
+                unset($dataSource['read-only']);
+            }
+
             $dataSource['source'] = 'LOCAL';
             $dataSource['uuid'] = $dataSource['uuid'] ?? Uuid::generate(4)->string;
 

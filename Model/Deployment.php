@@ -60,7 +60,7 @@ class Deployment
         $this->type = $options['type'];
         $this->host = $options['host'];
         $this->url = $options['url'];
-        $this->port = strval($options['port']);
+        $this->port = (string) $options['port'];
         $this->privateKey = $options['private_key'];
         $this->mappings = $options['mappings'];
     }
