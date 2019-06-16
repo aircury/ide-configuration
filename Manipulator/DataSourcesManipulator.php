@@ -39,6 +39,9 @@ class DataSourcesManipulator
                 case 'mysql':
                     $dataSource->getNamedChild('jdbc-driver')->contents = 'com.mysql.jdbc.Driver';
                     break;
+                case 'mariadb':
+                    $dataSource->getNamedChild('jdbc-driver')->contents = 'org.mariadb.jdbc.Driver';
+                    break;
                 case 'postgresql':
                     $dataSource->getNamedChild('jdbc-driver')->contents = 'org.postgresql.Driver';
                     break;
