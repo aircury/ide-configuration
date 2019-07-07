@@ -133,6 +133,7 @@ class PHPManipulator
 
                 $phpUnit = new Process($phpUnitPath . ' --version');
 
+                $phpUnit->setTimeout(5 * 60);
                 $phpUnit->run();
 
                 $phpUnitVersion = implode('.', array_slice(explode('.', explode(' ', $phpUnit->getOutput())[1]), 0, 2));
